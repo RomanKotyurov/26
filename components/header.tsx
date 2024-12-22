@@ -12,13 +12,13 @@ useEffect(() => {
 }, [])
 
 async function loadProducts(){
-  //let res = await fetch('http://localhost:2000/api/product')
-  let res = await fetch(process.env.REACT_APP_API_URL + "/api/product")
+  let res = await fetch('http://localhost:3000/api/product')
+  //let res = await fetch(process.env.API+ "/api/product")
   let resJson = await res.json()
   setProducts(resJson)
 }
 
-async function onChange(fieldName, value, productIndex) {
+async function onChange(fieldName: string, value: string, productIndex: number) {
   let newProducts = [...products]
   newProducts[productIndex][fieldName] = value
   setProducts(newProducts)
@@ -52,11 +52,10 @@ async function onChange(fieldName, value, productIndex) {
       
          {/* INGREDIENTS */}
          <div className="flex-direction-column">{
-         product.ingredients.map((ingredient, ingredientIndex) => {
+         product.ingredients.map((ingredient: string, ingredientIndex: number) => {
           return (
-            <div>
+            <div key={ingredientIndex}>
             <input value={ingredient}
-              key={ingredientIndex}
               onChange={(e) => {
               let value = e.target.value 
               let newProducts = [...products]
@@ -94,7 +93,8 @@ async function onChange(fieldName, value, productIndex) {
       
           <button
           onClick={async ()=>{
-            let res = await fetch(process.env.REACT_APP_API_URL + '/api/product', 
+            let res = await fetch('http://localhost:3000/api/product',
+            // let res = await fetch(process.env.REACT_APP_API_URL + '/api/product', 
               {
                 method: 'POST',
                 headers: {
